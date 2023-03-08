@@ -6,7 +6,7 @@ import HorizontalCalendar from '../common/HorizontalCalendar';
 import StarRating from 'react-native-star-rating';
 import ItemClass from '../itemComponents/ItemClass';
 import ItemDetail from '../itemComponents/ItemDetail';
-const TheClasses = () => {
+const DetailsClass = () => {
     const [selectedDate, setSelectedDate] = useState(new Date());
     return (
         <View >
@@ -43,15 +43,19 @@ const TheClasses = () => {
                 />
             </View>
             <ScrollView style={styles.container}>
-                <SearchBar
-                    inputStyle={{ backgroundColor: 'white', fontStyle: 'italic' }}
-                    containerStyle={styles.search_bar}
-                    inputContainerStyle={{ backgroundColor: 'white', height: 30 }}
-                    placeholder="Search the location ..."
-                />
-                 
-                 <ItemClass />
-                 <ItemDetail title = 'Class Description'
+                <View style={styles.container_location}>
+                    <ItemDetail 
+                        title = 'Class Description'
+                        detail = 'How you handle a customer'/>
+                    <View style={styles.container_map}>
+                        <TouchableOpacity>
+                            <Text style = {styles.text_detail}>Map</Text>
+                        </TouchableOpacity>
+                    </View>    
+                </View>
+                <ItemDetail title = 'Class Description'
+                    detail = 'How you handle a customer'/>
+                <ItemDetail title = 'Class Description'
                     detail = 'How you handle a customer'/>
                 <ItemDetail title = 'Class Description'
                     detail = 'How you handle a customer'/>
@@ -60,10 +64,9 @@ const TheClasses = () => {
         </View>
     )
 }
-export default TheClasses;
+export default DetailsClass;
 const styles = StyleSheet.create({
     container: {
-        padding: 8,
     },
     container_header: {
         width: '100%',
@@ -104,11 +107,25 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         borderBottomWidth: 0.5,
     },
-    search_bar: {
-        borderWidth: 2,
-        borderRadius: 20,
-        marginBottom: 10,
-        backgroundColor: '#fff'
+    container_location: {
+        flexDirection: 'row',
+        backgroundColor: '#FFF',
+        justifyContent: 'space-between'
     },
+    container_map: {
+        width: 80,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    text_map: {
+        fontSize: 22,
+        fontWeight: 'bold',
+        color: '#FFF',
+    },
+    text_detail: {
+        fontSize: 16,
+        color: '#6dcff6',
+        textAlign: 'center'
+    }
 }
 );

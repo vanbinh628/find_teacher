@@ -1,7 +1,14 @@
-import { createStore, combineReducers, applyMiddleware  } from 'redux';
+import { createStore, combineReducers, applyMiddleware, compose  } from 'redux';
 import thunk from 'redux-thunk';
-import userReducer from './reducer';
+import ReducerUserInfo from './reducer/ReducerUserInfo';
+import ReducerTopic from './reducer/ReducerTopic';
+import {ReducerNotification} from './reducer/ReducerNotification'
 
-const rootReducer = combineReducers({userReducer});
 
-export const Store = createStore(rootReducer, applyMiddleware(thunk));
+const rootReducer = combineReducers({
+    userInfo: ReducerUserInfo,
+    topics: ReducerTopic,
+    notis: ReducerNotification
+});
+
+export const Store = createStore(rootReducer, compose(applyMiddleware(thunk)));

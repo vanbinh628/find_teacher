@@ -8,7 +8,7 @@ function ChangePassword ({navigation}){
     navigation.navigate('Login');
   }
 
-  const {name, password} = useSelector(state => state.userReducer);
+  const {name, password} = useSelector(state => state.user);
 
 
     return (

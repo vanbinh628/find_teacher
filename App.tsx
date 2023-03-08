@@ -6,25 +6,57 @@ import { createStackNavigator } from '@react-navigation/stack';
 import ListTopic from './components/ListTopic';
 import ChangePassword from './components/ChangePassword';
 import Login from './components/Login';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import EditProfile from './components/EditProfile';
 import Profile from './components/Profile';
 import { Provider } from "react-redux";
 import { Store } from './redux/store';
 import TheClasses from './components/TheClasses'
 
-import { setName, setPassword } from './redux/action';
-import ListTopic2 from './components/ListTopic2';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import ActivityNotification from './components/ActivityNotification';
+import PersonalNotification from './components/PersonalNotification';
+import DetailsClass from './components/DetailClass';
 
 const App = () => {
   const Tab = createBottomTabNavigator();
 
   const Stack = createStackNavigator();
 
+  function TopNavigationNotification() {
+    const Tab = createMaterialTopTabNavigator();
+    return (
+      <Tab.Navigator
+        initialRouteName="Feed"
+        screenOptions={({ route }) => ({
+          tabBarIndicatorStyle: {
+            borderBottomColor: '#3CBA54',
+            borderBottomWidth: 5,
+          },
+          tabBarStyle: {
+            backgroundColor: '#F1F1F1',
+
+          },
+
+          tabBarLabelStyle: {
+            fontSize: 18,
+            textTransform: 'none',
+          },
+
+        })}>
+        <Tab.Screen name='Personal' component={PersonalNotification} />
+        <Tab.Screen name='Class' component={ActivityNotification} />
+      </Tab.Navigator>
+    )
+  }
+
   function StackNavigationUser() {
     const Stack = createStackNavigator();
     return (
-      <Stack.Navigator>
+      <Stack.Navigator screenOptions={({ route }) => ({
+        headerShown: route.name === 'Profile' ? false : true,
+        headerTitleAlign: 'center'
+      })}>
         <Stack.Screen name='Profile' component={Profile} />
         <Stack.Screen name='EditProfile' component={EditProfile} />
         <Stack.Screen name='ChangePassword' component={ChangePassword} />
@@ -40,31 +72,27 @@ const App = () => {
           tabBarIcon: ({ focused, size, color }) => {
             let iconName;
             switch (route.name) {
-              case 'StackNavigationUser': iconName = 'user';
+              case 'StackNavigationUser': iconName = 'account-outline';
                 break;
-              case 'List_Topic': iconName = 'comment-alt';
+              case 'List_Topic': iconName = 'book-open-page-variant-outline';
+                break;
+              case 'notification': iconName = 'bell-outline';
                 break;
               default:
                 break;
-
             }
             return (
-              <FontAwesome5 name={iconName}
-                color={color}
-                size={size} />
+              <MaterialCommunityIcons name={iconName} color={color} size={size} />
             )
           },
-          headerShown: route.name === 'StackNavigationUser' ? false : true
+          headerShown: false,
+          tabBarShowLabel: false,
+          tabBarActiveTintColor: '#6dcff6',
         })
-        }
-        tabBarOptions={{
-          activeTintColor: 'blue',
-          showLabel: false,
-          size: 50
-
-        }} >
+        }>
+        <Tab.Screen name="List_Topic" component={DetailsClass} />
+        <Tab.Screen name='notification' component={TopNavigationNotification} options = {{tabBarBadge: 3}} />
         <Tab.Screen name="StackNavigationUser" component={StackNavigationUser} />
-        <Tab.Screen name="List_Topic" component={ListTopic} />
       </Tab.Navigator>
 
     )
@@ -74,7 +102,7 @@ const App = () => {
     <Provider store={Store}>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
-          <Stack.Screen name='Login' component={ListTopic2} />
+          <Stack.Screen name='Login' component={Login} />
           <Stack.Screen name='Bottom_Navigation' component={BottomNavigationApp} />
         </Stack.Navigator>
 

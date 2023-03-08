@@ -1,26 +1,24 @@
 import React, {useState} from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
-import MessageBox from './MessageBox';
-import { useSelector, useDispatch } from 'react-redux';
-import { setName, setPassword, getListTopic } from '../redux/action';
+import MessageBox from '../common/MessageBox';
+import { useDispatch } from 'react-redux';
+import { fetchUserInfo } from '../redux/action/ActionUserInformation';
 const Login = ({navigation}) => {
   const notificaiton = 'user name or pass is wrong';
 
   const isTrueName = 'vansun1996';
   const isTruePass = '123456'
 
-  const {name, password} = useSelector(state => state.userReducer);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+
   const [userName, setUserName] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [isShowMessBox, setIsShowMessBox] = useState(false);
 
-  const onPressHandler = () => {
+  const loginHandler = () => {
 
     if(userName.trim() === isTrueName && userPassword === isTruePass) {
-      dispatch(setName(userName));
-      dispatch(setPassword(userPassword));
-      dispatch(getListTopic())
+      dispatch(fetchUserInfo())
       navigation.navigate('Bottom_Navigation');
     } else {
       setIsShowMessBox(true);
@@ -28,9 +26,7 @@ const Login = ({navigation}) => {
   }
     return (
       
-
       <View style={styles.container}>
-        <Text>{name}</Text>
         <MessageBox isShowMessageBox = {isShowMessBox}
           onPressCloseMessageBox = {()=>setIsShowMessBox(false)}
           type = 'Information'
@@ -48,7 +44,7 @@ const Login = ({navigation}) => {
           <Text style = {styles.button_text_register}>Register</Text>
         </TouchableOpacity>
         <TouchableOpacity style = {styles.button_Login}
-          onPress = {onPressHandler}>
+          onPress = {loginHandler}>
           <Text style = {styles.button_text_Login}>Login</Text>
         </TouchableOpacity>
         </View>
@@ -63,7 +59,7 @@ const styles = StyleSheet.create({
     paddingLeft: 30,
     paddingRight: 30,
     paddingTop: 10,
-    backgroundColor:'white'
+    backgroundColor:'#fff'
   },
   text_input: {
     borderWidth: 1,

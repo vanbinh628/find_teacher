@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
-import {useDispatch} from 'react-redux'
+import { useSelector } from 'react-redux'
 import { StyleSheet, View, Image, Text, TouchableOpacity } from 'react-native';
-import { getUserInformation } from '../redux/action';
-const Profile = ({navigation}) => {
-    const dispatch = useDispatch();
+const Profile = ({ navigation }) => {
+    const { userInfo } = useSelector((state) => state.userInfo)
 
     const onPressHandler = () => {
-        dispatch(getUserInformation())
         navigation.navigate('EditProfile');
     }
 
@@ -15,10 +13,10 @@ const Profile = ({navigation}) => {
             <View style={styles.container_profile}>
                 <View style={styles.container_infor}>
                     <Image style={styles.image_view}
-                        source={require('../jupiter_leo.jpg')} />
+                        source={{uri:userInfo.image}} />
                     <View style={styles.container_text}>
-                        <Text style={styles.text_name}>Gia Han</Text>
-                        <Text>email@gmail.com</Text>
+                        <Text style={styles.text_name}>{userInfo.fullName}</Text>
+                        <Text>{userInfo.email}</Text>
                         <TouchableOpacity onPress={onPressHandler}>
                             <Text style={styles.text_change_pass}>Edit your profile</Text>
                         </TouchableOpacity>
@@ -36,8 +34,8 @@ const Profile = ({navigation}) => {
                 </View>
             </View>
 
-            <TouchableOpacity style = {styles.button}>
-                <Text style = {styles.text_logout}>Log out</Text>
+            <TouchableOpacity style={styles.button}>
+                <Text style={styles.text_logout}>Log out</Text>
             </TouchableOpacity>
         </View>
     );
@@ -72,7 +70,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         alignItems: 'center',
         borderTopWidth: 1,
-        borderColor:'#dddddd',
+        borderColor: '#dddddd',
         paddingTop: 10
     },
     text_name: {
@@ -96,7 +94,7 @@ const styles = StyleSheet.create({
     },
 
     button: {
-        backgroundColor:'#ffff',
+        backgroundColor: '#ffff',
         marginTop: 20,
         padding: 30,
         borderRadius: 10,

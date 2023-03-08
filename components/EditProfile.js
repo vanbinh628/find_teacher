@@ -1,23 +1,22 @@
-import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useSelector} from 'react-redux';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, ScrollView } from 'react-native';
 function EditProfile({ navigation }) {
 
-    const {userInfor} = useSelector(state => state.userReducer)
+    const { userInfo } = useSelector((state) => state.userInfo)
 
     const onPressHandler = () => {
         navigation.navigate('ChangePassword');
     }
 
-
     return (
         <ScrollView style={styles.container}>
             <View style={styles.container_infor}>
                 <Image style={styles.image_view}
-                    source={{uri: userInfor.image }} />
+                    source={{uri: userInfo.image }} />
                 <View style={styles.container_text}>
-                    <Text style={styles.text_name}>{userInfor.fullName}</Text>
-                    <Text>{userInfor.email}</Text>
+                    <Text style={styles.text_name}>{userInfo.fullName}</Text>
+                    <Text>{userInfo.email}</Text>
                     <TouchableOpacity onPress={onPressHandler}>
                         <Text style={styles.text_change_pass}>change Password</Text>
                     </TouchableOpacity>
@@ -25,13 +24,13 @@ function EditProfile({ navigation }) {
                 </View>
             </View>
             <Text>Full Name</Text>
-            <TextInput style={styles.text_input} value = {userInfor.fullName}/>
+            <TextInput style={styles.text_input} value = {userInfo.fullName}/>
             <Text>Username</Text>
-            <TextInput style={styles.text_input} value = {userInfor.userName}/>
+            <TextInput style={styles.text_input} value = {userInfo.userName}/>
             <Text>Email</Text>
-            <TextInput style={styles.text_input} value = {userInfor.email}/>
+            <TextInput style={styles.text_input} value = {userInfo.email}/>
             <Text>Phone</Text>
-            <TextInput style={styles.text_input} value = {userInfor.phone}
+            <TextInput style={styles.text_input} value = {userInfo.phone}
                 keyboardType='number-pad' />
 
             <View style={styles.container_action}>
